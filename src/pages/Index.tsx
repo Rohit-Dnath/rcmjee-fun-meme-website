@@ -415,7 +415,6 @@ const Index = () => {
             <div className="flex items-center justify-center space-x-4">
               <img src="/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png" alt="RCHM Logo" className="h-12 w-12" />
               <div className="text-center">
-                <h1 className="text-2xl font-bold text-blue-900 uppercase">Government of India</h1>
                 <h2 className="text-xl font-semibold text-blue-800">Reyansh College of Hotel Management</h2>
                 <p className="text-sm text-gray-700">Joint Entrance Examination - 2025</p>
               </div>
@@ -490,6 +489,7 @@ const Index = () => {
               <li>Only online applications will be accepted</li>
               <li>Ensure all details are filled correctly before submission</li>
               <li>No corrections will be allowed after final submission</li>
+              <li>Disclaimer: This is a Meme so take it as a Meme</li>
             </ul>
           </div>
         </div>

@@ -142,7 +142,96 @@ const Index = () => {
 
     const doc = new jsPDF();
     
-    // Add college logo
+    // Define the function to generate PDF without logo first
+    const generatePDFWithoutLogo = () => {
+      // Header text without logo
+      doc.setFontSize(18);
+      doc.setTextColor(220, 38, 127);
+      doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 25, { align: 'center' });
+      
+      doc.setFontSize(14);
+      doc.setTextColor(0, 0, 0);
+      doc.text('Joint Entrance Examination 2025 - Score Card', 105, 35, { align: 'center' });
+      
+      // Decorative line
+      doc.setDrawColor(59, 130, 246);
+      doc.setLineWidth(2);
+      doc.line(20, 45, 190, 45);
+      
+      // Student Details Section
+      doc.setFontSize(14);
+      doc.setTextColor(59, 130, 246);
+      doc.text('STUDENT DETAILS', 20, 60);
+      
+      doc.setFontSize(11);
+      doc.setTextColor(0, 0, 0);
+      doc.text('Name:', 20, 75);
+      doc.text(formData.name, 50, 75);
+      
+      doc.text('Date of Birth:', 20, 85);
+      doc.text(formData.dob, 60, 85);
+      
+      doc.text('Email:', 20, 95);
+      doc.text(formData.email, 50, 95);
+      
+      doc.text('Phone:', 20, 105);
+      doc.text(formData.phone, 50, 105);
+      
+      // Results Section
+      doc.setFontSize(14);
+      doc.setTextColor(59, 130, 246);
+      doc.text('EXAMINATION RESULTS', 20, 125);
+      
+      // Score in large text
+      doc.setFontSize(24);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`SCORE: ${examResult.score}/100`, 20, 145);
+      
+      // Status with color
+      doc.setFontSize(16);
+      if (examResult.passed) {
+        doc.setTextColor(34, 197, 94); // Green
+        doc.text('STATUS: PASSED ✓', 20, 160);
+        
+        // Success details
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`🎉 Congratulations! Welcome to RCHM!`, 20, 180);
+        doc.text(`📅 Joining Date: ${examResult.joiningDate}`, 20, 190);
+        doc.text(`🎓 Course: Diploma in Hotel Management - 2025 Batch`, 20, 200);
+        doc.text(`🏨 You've passed the legendary RCHM Vibe Check!`, 20, 210);
+        
+      } else {
+        doc.setTextColor(239, 68, 68); // Red
+        doc.text('STATUS: FAILED ❌', 20, 160);
+        
+        // Hilarious failure messages
+        doc.setFontSize(12);
+        doc.setTextColor(239, 68, 68);
+        doc.text('💀 EPIC FAIL! You have FAILED the Vibe Check!', 20, 180);
+        doc.text('🤡 Sorry, but you are a NOOB at hotel management!', 20, 190);
+        doc.text('😂 You cannot join Reyansh College of Hotel Management', 20, 200);
+        doc.text('🚫 Your hospitality skills need serious CPR!', 20, 210);
+        doc.text('📚 Maybe try reading "Hotel Management for Dummies" first?', 20, 220);
+        doc.text('🎪 Consider a career in circus management instead!', 20, 230);
+      }
+      
+      // Footer
+      doc.setFontSize(9);
+      doc.setTextColor(128, 128, 128);
+      doc.text('This is a computer generated score card (and totally legit 😉)', 105, 255, { align: 'center' });
+      doc.text('Generated on: ' + new Date().toLocaleDateString(), 105, 265, { align: 'center' });
+      doc.text('Powered by RCMJEE 2025 - Where Dreams Meet Reality!', 105, 275, { align: 'center' });
+      
+      // Add border
+      doc.setDrawColor(59, 130, 246);
+      doc.setLineWidth(1);
+      doc.rect(10, 10, 190, 270);
+      
+      doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+    };
+    
+    // Try to add college logo
     try {
       const logoImg = new Image();
       logoImg.crossOrigin = 'anonymous';
@@ -239,18 +328,8 @@ const Index = () => {
       logoImg.src = '/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png';
     } catch (error) {
       console.log('Logo loading failed, generating PDF without logo');
-      // Generate PDF without logo if image fails to load
       generatePDFWithoutLogo();
     }
-    
-    const generatePDFWithoutLogo = () => {
-      // Same PDF generation code but without the logo
-      doc.setFontSize(18);
-      doc.setTextColor(220, 38, 127);
-      doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 25, { align: 'center' });
-      // ... rest of the PDF generation code would go here
-      doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
-    };
     
     toast({
       title: "Score Card Downloaded!",

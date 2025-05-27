@@ -489,7 +489,7 @@ const Index = () => {
               <li>Only online applications will be accepted</li>
               <li>Ensure all details are filled correctly before submission</li>
               <li>No corrections will be allowed after final submission</li>
-              <li>Disclaimer: This is a Meme so take it as a Meme</li>
+              <li>Disclaimer: This is a Meme website so take it as a Meme:)</li>
             </ul>
           </div>
         </div>

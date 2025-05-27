@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import { Download, GraduationCap, Calendar, Users, Trophy } from "lucide-react";
+import { Download, Calendar } from "lucide-react";
 import jsPDF from 'jspdf';
 
 type FormData = {
@@ -142,7 +142,6 @@ const Index = () => {
 
     const doc = new jsPDF();
     
-    // Define the function to generate PDF without logo first
     const generatePDFWithoutLogo = () => {
       // Background color
       doc.setFillColor(248, 250, 252);
@@ -161,20 +160,20 @@ const Index = () => {
       doc.text('Joint Entrance Examination 2025', 105, 38, { align: 'center' });
       
       doc.setFontSize(14);
-      doc.text('OFFICIAL SCORE CARD', 105, 50, { align: 'center' });
+      doc.text('OFFICIAL ADMISSION CARD', 105, 50, { align: 'center' });
       
       // Main content background
       doc.setFillColor(255, 255, 255);
-      doc.rect(15, 70, 180, 200, 'F');
+      doc.rect(15, 70, 180, 210, 'F');
       
       // Border for main content
       doc.setDrawColor(37, 99, 235);
       doc.setLineWidth(2);
-      doc.rect(15, 70, 180, 200);
+      doc.rect(15, 70, 180, 210);
       
       // Student Details Section
       doc.setFillColor(239, 246, 255);
-      doc.rect(20, 80, 170, 40, 'F');
+      doc.rect(20, 80, 170, 35, 'F');
       
       doc.setFontSize(16);
       doc.setTextColor(37, 99, 235);
@@ -191,82 +190,77 @@ const Index = () => {
       doc.setFont('helvetica', 'bold');
       doc.text(formData.dob, 75, 112);
       
+      // Passing criteria
+      doc.setFillColor(255, 248, 220);
+      doc.rect(20, 125, 170, 20, 'F');
+      doc.setFontSize(12);
+      doc.setTextColor(184, 134, 11);
+      doc.text('PASSING CRITERIA: You need 100 marks to pass', 105, 137, { align: 'center' });
+      
       // Results Section
       doc.setFillColor(255, 255, 255);
       doc.setFontSize(18);
       doc.setTextColor(37, 99, 235);
-      doc.text('EXAMINATION RESULTS', 105, 140, { align: 'center' });
+      doc.text('EXAMINATION RESULTS', 105, 160, { align: 'center' });
       
-      // Score circle background
+      // Score display
+      doc.setFontSize(14);
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Score Obtained: ${examResult.score} / 100`, 105, 175, { align: 'center' });
+      
+      // Status with better formatting
+      doc.setFontSize(16);
       if (examResult.passed) {
         doc.setFillColor(34, 197, 94);
-      } else {
-        doc.setFillColor(239, 68, 68);
-      }
-      doc.circle(105, 165, 25, 'F');
-      
-      // Score text
-      doc.setFontSize(24);
-      doc.setTextColor(255, 255, 255);
-      doc.text(`${examResult.score}`, 105, 162, { align: 'center' });
-      doc.setFontSize(12);
-      doc.text('out of 100', 105, 172, { align: 'center' });
-      
-      // Status with color
-      doc.setFontSize(20);
-      if (examResult.passed) {
-        doc.setTextColor(34, 197, 94);
-        doc.text('✅ PASSED', 105, 200, { align: 'center' });
+        doc.rect(40, 185, 130, 30, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.text('PASSED', 105, 203, { align: 'center' });
         
-        // Success details box
+        // Success details
         doc.setFillColor(220, 252, 231);
-        doc.rect(25, 210, 160, 50, 'F');
+        doc.rect(25, 225, 160, 45, 'F');
         doc.setDrawColor(34, 197, 94);
         doc.setLineWidth(1);
-        doc.rect(25, 210, 160, 50);
+        doc.rect(25, 225, 160, 45);
         
         doc.setFontSize(14);
         doc.setTextColor(34, 197, 94);
-        doc.text('🎉 CONGRATULATIONS! 🎉', 105, 225, { align: 'center' });
+        doc.text('CONGRATULATIONS!', 105, 240, { align: 'center' });
         
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
-        doc.text('Welcome to Reyansh College of Hotel Management!', 105, 235, { align: 'center' });
-        doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 245, { align: 'center' });
-        doc.text('Course: Diploma in Hotel Management - 2025 Batch', 105, 255, { align: 'center' });
+        doc.text('Welcome to Reyansh College of Hotel Management!', 105, 250, { align: 'center' });
+        doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 260, { align: 'center' });
         
       } else {
-        doc.setTextColor(239, 68, 68);
-        doc.text('❌ FAILED', 105, 200, { align: 'center' });
+        doc.setFillColor(239, 68, 68);
+        doc.rect(40, 185, 130, 30, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.text('NOT QUALIFIED', 105, 203, { align: 'center' });
         
-        // Failure details box
+        // Failure details
         doc.setFillColor(254, 226, 226);
-        doc.rect(25, 210, 160, 40, 'F');
+        doc.rect(25, 225, 160, 35, 'F');
         doc.setDrawColor(239, 68, 68);
         doc.setLineWidth(1);
-        doc.rect(25, 210, 160, 40);
+        doc.rect(25, 225, 160, 35);
         
-        doc.setFontSize(14);
-        doc.setTextColor(239, 68, 68);
-        doc.text('BETTER LUCK NEXT TIME!', 105, 225, { align: 'center' });
-        
-        doc.setFontSize(11);
+        doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
-        doc.text('Unfortunately, you did not pass the examination.', 105, 235, { align: 'center' });
-        doc.text('Please prepare well and attempt again next year.', 105, 245, { align: 'center' });
+        doc.text('Unfortunately, you did not meet the passing criteria.', 105, 240, { align: 'center' });
+        doc.text('Please prepare well and attempt again next year.', 105, 250, { align: 'center' });
       }
       
       // Footer
       doc.setFontSize(8);
       doc.setTextColor(128, 128, 128);
-      doc.text('This is a computer generated score card', 105, 280, { align: 'center' });
-      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 288, { align: 'center' });
-      doc.text('Powered by RCMJEE 2025', 105, 296, { align: 'center' });
+      doc.text('This is a computer generated admission card', 105, 275, { align: 'center' });
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 282, { align: 'center' });
       
-      doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+      doc.save(`RCMJEE_2025_AdmissionCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
     };
     
-    // Try to add college logo with improved positioning
+    // Try to add college logo
     try {
       const logoImg = new Image();
       logoImg.crossOrigin = 'anonymous';
@@ -275,13 +269,13 @@ const Index = () => {
         doc.setFillColor(248, 250, 252);
         doc.rect(0, 0, 210, 297, 'F');
         
-        // Header background - made taller to accommodate logo
+        // Header background
         doc.setFillColor(37, 99, 235);
         doc.rect(0, 0, 210, 70, 'F');
         
         // Center the logo at the top
         const logoSize = 35;
-        const logoX = (210 - logoSize) / 2; // Center horizontally
+        const logoX = (210 - logoSize) / 2;
         doc.addImage(logoImg, 'PNG', logoX, 10, logoSize, logoSize);
         
         // Header text positioned below the logo
@@ -292,7 +286,7 @@ const Index = () => {
         doc.setFontSize(14);
         doc.text('Joint Entrance Examination 2025', 105, 62, { align: 'center' });
         
-        // Main content background - adjusted position
+        // Main content background
         doc.setFillColor(255, 255, 255);
         doc.rect(15, 80, 180, 200, 'F');
         
@@ -301,16 +295,16 @@ const Index = () => {
         doc.setLineWidth(2);
         doc.rect(15, 80, 180, 200);
         
-        // "OFFICIAL SCORE CARD" banner
+        // "OFFICIAL ADMISSION CARD" banner
         doc.setFillColor(37, 99, 235);
         doc.rect(20, 85, 170, 15, 'F');
         doc.setFontSize(14);
         doc.setTextColor(255, 255, 255);
-        doc.text('OFFICIAL SCORE CARD', 105, 95, { align: 'center' });
+        doc.text('OFFICIAL ADMISSION CARD', 105, 95, { align: 'center' });
         
         // Student Details Section
         doc.setFillColor(239, 246, 255);
-        doc.rect(20, 105, 170, 40, 'F');
+        doc.rect(20, 105, 170, 35, 'F');
         
         doc.setFontSize(16);
         doc.setTextColor(37, 99, 235);
@@ -327,78 +321,74 @@ const Index = () => {
         doc.setFont('helvetica', 'bold');
         doc.text(formData.dob, 75, 137);
         
+        // Passing criteria
+        doc.setFillColor(255, 248, 220);
+        doc.rect(20, 150, 170, 20, 'F');
+        doc.setFontSize(12);
+        doc.setTextColor(184, 134, 11);
+        doc.text('PASSING CRITERIA: You need 100 marks to pass', 105, 162, { align: 'center' });
+        
         // Results Section
         doc.setFillColor(255, 255, 255);
         doc.setFontSize(18);
         doc.setTextColor(37, 99, 235);
-        doc.text('EXAMINATION RESULTS', 105, 160, { align: 'center' });
+        doc.text('EXAMINATION RESULTS', 105, 180, { align: 'center' });
         
-        // Score circle background
+        // Score display
+        doc.setFontSize(14);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Score Obtained: ${examResult.score} / 100`, 105, 195, { align: 'center' });
+        
+        // Status with better formatting
+        doc.setFontSize(16);
         if (examResult.passed) {
           doc.setFillColor(34, 197, 94);
-        } else {
-          doc.setFillColor(239, 68, 68);
-        }
-        doc.circle(105, 185, 25, 'F');
-        
-        // Score text
-        doc.setFontSize(24);
-        doc.setTextColor(255, 255, 255);
-        doc.text(`${examResult.score}`, 105, 182, { align: 'center' });
-        doc.setFontSize(12);
-        doc.text('out of 100', 105, 192, { align: 'center' });
-        
-        // Status with color
-        doc.setFontSize(20);
-        if (examResult.passed) {
-          doc.setTextColor(34, 197, 94);
-          doc.text('✅ PASSED', 105, 220, { align: 'center' });
+          doc.rect(40, 205, 130, 25, 'F');
+          doc.setTextColor(255, 255, 255);
+          doc.text('PASSED', 105, 220, { align: 'center' });
           
-          // Success details box
+          // Success details
           doc.setFillColor(220, 252, 231);
-          doc.rect(25, 230, 160, 45, 'F');
+          doc.rect(25, 240, 160, 35, 'F');
           doc.setDrawColor(34, 197, 94);
           doc.setLineWidth(1);
-          doc.rect(25, 230, 160, 45);
-          
-          doc.setFontSize(14);
-          doc.setTextColor(34, 197, 94);
-          doc.text('🎉 CONGRATULATIONS! 🎉', 105, 245, { align: 'center' });
+          doc.rect(25, 240, 160, 35);
           
           doc.setFontSize(12);
+          doc.setTextColor(34, 197, 94);
+          doc.text('CONGRATULATIONS!', 105, 252, { align: 'center' });
+          
+          doc.setFontSize(10);
           doc.setTextColor(0, 0, 0);
-          doc.text('Welcome to Reyansh College of Hotel Management!', 105, 255, { align: 'center' });
-          doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 265, { align: 'center' });
-          doc.text('Course: Diploma in Hotel Management - 2025 Batch', 105, 270, { align: 'center' });
+          doc.text('Welcome to Reyansh College of Hotel Management!', 105, 262, { align: 'center' });
+          doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 270, { align: 'center' });
           
         } else {
-          doc.setTextColor(239, 68, 68);
-          doc.text('❌ FAILED', 105, 220, { align: 'center' });
+          doc.setFillColor(239, 68, 68);
+          doc.rect(40, 205, 130, 25, 'F');
+          doc.setTextColor(255, 255, 255);
+          doc.text('NOT QUALIFIED', 105, 220, { align: 'center' });
           
-          // Failure details box
+          // Failure details
           doc.setFillColor(254, 226, 226);
-          doc.rect(25, 230, 160, 40, 'F');
+          doc.rect(25, 240, 160, 30, 'F');
           doc.setDrawColor(239, 68, 68);
           doc.setLineWidth(1);
-          doc.rect(25, 230, 160, 40);
+          doc.rect(25, 240, 160, 30);
           
-          doc.setFontSize(14);
-          doc.setTextColor(239, 68, 68);
-          doc.text('BETTER LUCK NEXT TIME!', 105, 245, { align: 'center' });
-          
-          doc.setFontSize(11);
+          doc.setFontSize(10);
           doc.setTextColor(0, 0, 0);
-          doc.text('Unfortunately, you did not pass the examination.', 105, 255, { align: 'center' });
-          doc.text('Please prepare well and attempt again next year.', 105, 265, { align: 'center' });
+          doc.text('Unfortunately, you did not meet the passing criteria.', 105, 252, { align: 'center' });
+          doc.text('Please prepare well and attempt again next year.', 105, 262, { align: 'center' });
         }
         
         // Footer
         doc.setFontSize(8);
         doc.setTextColor(128, 128, 128);
-        doc.text('This is a computer generated score card', 105, 285, { align: 'center' });
+        doc.text('This is a computer generated admission card', 105, 285, { align: 'center' });
         doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 290, { align: 'center' });
         
-        doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+        doc.save(`RCMJEE_2025_AdmissionCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
       };
       logoImg.onerror = () => {
         console.log('Logo loading failed, generating PDF without logo');
@@ -411,69 +401,98 @@ const Index = () => {
     }
     
     toast({
-      title: "Score Card Downloaded!",
-      description: examResult.passed ? "Your official score card has been saved!" : "Your score card has been generated.",
+      title: "Admission Card Downloaded!",
+      description: examResult.passed ? "Your official admission card has been saved!" : "Your admission card has been generated.",
     });
   };
 
   if (currentStep === 'home') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-        {/* Header */}
-        <header className="bg-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="min-h-screen bg-gray-100">
+        {/* Simple Government Website Style Header */}
+        <header className="bg-white border-b-4 border-blue-800">
+          <div className="max-w-6xl mx-auto px-4 py-4">
             <div className="flex items-center justify-center space-x-4">
-              <img src="/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png" alt="RCHM Logo" className="h-16 w-16" />
+              <img src="/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png" alt="RCHM Logo" className="h-12 w-12" />
               <div className="text-center">
-                <h1 className="text-3xl font-bold text-blue-900">RCMJEE 2025</h1>
-                <p className="text-lg text-blue-700">Reyansh College of Hotel Management Joint Entrance Examination</p>
+                <h1 className="text-2xl font-bold text-blue-900 uppercase">Government of India</h1>
+                <h2 className="text-xl font-semibold text-blue-800">Reyansh College of Hotel Management</h2>
+                <p className="text-sm text-gray-700">Joint Entrance Examination - 2025</p>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Hero Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-5xl font-bold text-blue-900 mb-6">
-              Shape Your Future in Hospitality
-            </h2>
-            <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
-              Join the prestigious Diploma Course in Hotel Management - 2025 Batch. 
-              Take the entrance examination and embark on your journey to excellence.
+        {/* Main Content */}
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          {/* Title Section */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-red-600 mb-2 uppercase">
+              Earth-616's Hardest Examination
+            </h1>
+            <div className="bg-yellow-100 border border-yellow-400 p-4 rounded mb-6">
+              <p className="text-lg font-semibold text-gray-800">
+                Online Application for Diploma Course in Hotel Management - 2025 Batch
+              </p>
+              <p className="text-sm text-gray-600 mt-2">
+                Last Date for Application: 31st December 2024 | Examination Date: 15th January 2025
+              </p>
+            </div>
+          </div>
+
+          {/* Images Section */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white border-2 border-gray-300 p-4">
+              <img 
+                src="/lovable-uploads/dceeec07-13bf-419b-acac-ee3b6318599c.png" 
+                alt="RCHM Promo" 
+                className="w-full h-48 object-cover mb-2"
+              />
+              <p className="text-sm text-center text-gray-600">Promotional Content</p>
+            </div>
+            <div className="bg-white border-2 border-gray-300 p-4">
+              <img 
+                src="/lovable-uploads/2348ba20-08e6-4a3c-a3ad-e98c604dd003.png" 
+                alt="Students" 
+                className="w-full h-48 object-cover mb-2"
+              />
+              <p className="text-sm text-center text-gray-600">Our Students</p>
+            </div>
+            <div className="bg-white border-2 border-gray-300 p-4">
+              <img 
+                src="/lovable-uploads/8969324b-8a61-4268-86d1-956e94cd1d92.png" 
+                alt="Graduation" 
+                className="w-full h-48 object-cover mb-2"
+              />
+              <p className="text-sm text-center text-gray-600">Graduation Ceremony</p>
+            </div>
+          </div>
+
+          {/* Application Button */}
+          <div className="text-center bg-white border-2 border-blue-800 p-8">
+            <h3 className="text-xl font-bold text-blue-900 mb-4 uppercase">Online Application Portal</h3>
+            <p className="text-gray-700 mb-6">
+              Click the button below to start your application for RCMJEE 2025
             </p>
             <Button 
               onClick={() => setCurrentStep('application')}
-              size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg transform hover:scale-105 transition-all duration-200"
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg font-bold uppercase"
             >
-              Apply for RCMJEE 2025
+              Apply Now for RCMJEE 2025
             </Button>
           </div>
-        </section>
 
-        {/* Features */}
-        <section className="py-16 px-4 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center p-6">
-                <GraduationCap className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Expert Faculty</h3>
-                <p className="text-gray-600">Learn from industry professionals with years of experience</p>
-              </div>
-              <div className="text-center p-6">
-                <Users className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Industry Connections</h3>
-                <p className="text-gray-600">Strong placement assistance and industry partnerships</p>
-              </div>
-              <div className="text-center p-6">
-                <Trophy className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Excellence</h3>
-                <p className="text-gray-600">Committed to developing future hospitality leaders</p>
-              </div>
-            </div>
+          {/* Important Notice */}
+          <div className="mt-8 bg-red-50 border-l-4 border-red-500 p-4">
+            <h4 className="text-lg font-bold text-red-700 mb-2">IMPORTANT NOTICE:</h4>
+            <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+              <li>All candidates must score 100 marks to qualify for admission</li>
+              <li>Only online applications will be accepted</li>
+              <li>Ensure all details are filled correctly before submission</li>
+              <li>No corrections will be allowed after final submission</li>
+            </ul>
           </div>
-        </section>
+        </div>
       </div>
     );
   }
@@ -609,7 +628,7 @@ const Index = () => {
           <Card className="shadow-xl">
             <CardHeader className="text-center">
               <CardTitle className={`text-3xl ${examResult.passed ? 'text-green-600' : 'text-red-600'}`}>
-                {examResult.passed ? '🎉 Congratulations! You Passed!' : '💀 EPIC FAIL! Vibe Check Failed!'}
+                {examResult.passed ? '🎉 Congratulations! You Passed!' : 'Sorry! You did not qualify'}
               </CardTitle>
               <CardDescription className="text-lg">
                 RCMJEE 2025 Examination Results
@@ -635,24 +654,17 @@ const Index = () => {
                       <Calendar className="h-4 w-4" />
                       <span>Joining Date: {examResult.joiningDate}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <GraduationCap className="h-4 w-4" />
-                      <span>Course: Diploma in Hotel Management - 2025 Batch</span>
-                    </div>
-                    <p className="text-sm mt-2">🌟 You've successfully passed the legendary RCHM Vibe Check!</p>
+                    <p className="text-sm mt-2">You have successfully qualified for admission!</p>
                   </div>
                 </div>
               ) : (
                 <div className="bg-red-50 p-6 rounded-lg border border-red-200">
                   <h3 className="text-lg font-bold text-red-800 mb-3">
-                    🤡 Sorry, You're a NOOB!
+                    Better luck next time!
                   </h3>
                   <div className="space-y-2 text-red-700">
-                    <p className="font-semibold">💀 You have FAILED the Vibe Check!</p>
-                    <p>😂 You cannot join Reyansh College of Hotel Management</p>
-                    <p>🚫 Your hospitality skills need serious CPR!</p>
-                    <p className="text-sm">📚 Maybe try "Hotel Management for Dummies" first?</p>
-                    <p className="text-sm">🎪 Consider a career in circus management instead!</p>
+                    <p>Unfortunately, you did not meet the minimum qualifying marks.</p>
+                    <p>Please prepare well and attempt again next year.</p>
                   </div>
                 </div>
               )}
@@ -663,7 +675,7 @@ const Index = () => {
                   className="w-full bg-blue-600 hover:bg-blue-700"
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  {examResult.passed ? 'Download Victory Certificate (PDF)' : 'Download Epic Fail Certificate (PDF) 😂'}
+                  Download Admission Card (PDF)
                 </Button>
                 <Button 
                   onClick={() => {
@@ -677,7 +689,7 @@ const Index = () => {
                   variant="outline"
                   className="w-full"
                 >
-                  {examResult.passed ? 'Help a Friend Take the Exam' : 'Try Again (Good Luck!) 🍀'}
+                  {examResult.passed ? 'Help a Friend Take the Exam' : 'Try Again Next Year'}
                 </Button>
               </div>
             </CardContent>

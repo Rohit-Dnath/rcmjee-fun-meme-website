@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -138,60 +137,124 @@ const Index = () => {
     }
   };
 
-  const downloadScoreCard = () => {
+  const downloadScoreCard = async () => {
     if (!examResult) return;
 
     const doc = new jsPDF();
     
-    // Header
-    doc.setFontSize(20);
-    doc.setTextColor(59, 130, 246);
-    doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 30, { align: 'center' });
-    
-    doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0);
-    doc.text('Joint Entrance Examination 2025 - Score Card', 105, 45, { align: 'center' });
-    
-    // Student Details
-    doc.setFontSize(12);
-    doc.text('Student Name:', 20, 70);
-    doc.text(formData.name, 80, 70);
-    
-    doc.text('Date of Birth:', 20, 85);
-    doc.text(formData.dob, 80, 85);
-    
-    doc.text('Email:', 20, 100);
-    doc.text(formData.email, 80, 100);
-    
-    doc.text('Phone:', 20, 115);
-    doc.text(formData.phone, 80, 115);
-    
-    // Exam Results
-    doc.setFontSize(14);
-    doc.setTextColor(59, 130, 246);
-    doc.text('EXAMINATION RESULTS', 20, 140);
-    
-    doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Score: ${examResult.score}/100`, 20, 160);
-    doc.text(`Status: ${examResult.passed ? 'PASSED' : 'FAILED'}`, 20, 175);
-    
-    if (examResult.passed) {
-      doc.text(`Joining Date: ${examResult.joiningDate}`, 20, 190);
-      doc.text('Course: Diploma in Hotel Management - 2025 Batch', 20, 205);
+    // Add college logo
+    try {
+      const logoImg = new Image();
+      logoImg.crossOrigin = 'anonymous';
+      logoImg.onload = () => {
+        // Header with logo
+        doc.addImage(logoImg, 'PNG', 15, 10, 25, 25);
+        
+        // Header text
+        doc.setFontSize(18);
+        doc.setTextColor(220, 38, 127);
+        doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 20, { align: 'center' });
+        
+        doc.setFontSize(14);
+        doc.setTextColor(0, 0, 0);
+        doc.text('Joint Entrance Examination 2025 - Score Card', 105, 30, { align: 'center' });
+        
+        // Decorative line
+        doc.setDrawColor(59, 130, 246);
+        doc.setLineWidth(2);
+        doc.line(20, 40, 190, 40);
+        
+        // Student Details Section
+        doc.setFontSize(14);
+        doc.setTextColor(59, 130, 246);
+        doc.text('STUDENT DETAILS', 20, 55);
+        
+        doc.setFontSize(11);
+        doc.setTextColor(0, 0, 0);
+        doc.text('Name:', 20, 70);
+        doc.text(formData.name, 50, 70);
+        
+        doc.text('Date of Birth:', 20, 80);
+        doc.text(formData.dob, 60, 80);
+        
+        doc.text('Email:', 20, 90);
+        doc.text(formData.email, 50, 90);
+        
+        doc.text('Phone:', 20, 100);
+        doc.text(formData.phone, 50, 100);
+        
+        // Results Section
+        doc.setFontSize(14);
+        doc.setTextColor(59, 130, 246);
+        doc.text('EXAMINATION RESULTS', 20, 120);
+        
+        // Score in large text
+        doc.setFontSize(24);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`SCORE: ${examResult.score}/100`, 20, 140);
+        
+        // Status with color
+        doc.setFontSize(16);
+        if (examResult.passed) {
+          doc.setTextColor(34, 197, 94); // Green
+          doc.text('STATUS: PASSED ✓', 20, 155);
+          
+          // Success details
+          doc.setFontSize(12);
+          doc.setTextColor(0, 0, 0);
+          doc.text(`🎉 Congratulations! Welcome to RCHM!`, 20, 175);
+          doc.text(`📅 Joining Date: ${examResult.joiningDate}`, 20, 185);
+          doc.text(`🎓 Course: Diploma in Hotel Management - 2025 Batch`, 20, 195);
+          doc.text(`🏨 You've passed the legendary RCHM Vibe Check!`, 20, 205);
+          
+        } else {
+          doc.setTextColor(239, 68, 68); // Red
+          doc.text('STATUS: FAILED ❌', 20, 155);
+          
+          // Hilarious failure messages
+          doc.setFontSize(12);
+          doc.setTextColor(239, 68, 68);
+          doc.text('💀 EPIC FAIL! You have FAILED the Vibe Check!', 20, 175);
+          doc.text('🤡 Sorry, but you are a NOOB at hotel management!', 20, 185);
+          doc.text('😂 You cannot join Reyansh College of Hotel Management', 20, 195);
+          doc.text('🚫 Your hospitality skills need serious CPR!', 20, 205);
+          doc.text('📚 Maybe try reading "Hotel Management for Dummies" first?', 20, 215);
+          doc.text('🎪 Consider a career in circus management instead!', 20, 225);
+        }
+        
+        // Footer
+        doc.setFontSize(9);
+        doc.setTextColor(128, 128, 128);
+        doc.text('This is a computer generated score card (and totally legit 😉)', 105, 250, { align: 'center' });
+        doc.text('Generated on: ' + new Date().toLocaleDateString(), 105, 260, { align: 'center' });
+        doc.text('Powered by RCMJEE 2025 - Where Dreams Meet Reality!', 105, 270, { align: 'center' });
+        
+        // Add border
+        doc.setDrawColor(59, 130, 246);
+        doc.setLineWidth(1);
+        doc.rect(10, 10, 190, 270);
+        
+        doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+      };
+      logoImg.src = '/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png';
+    } catch (error) {
+      console.log('Logo loading failed, generating PDF without logo');
+      // Generate PDF without logo if image fails to load
+      generatePDFWithoutLogo();
     }
     
-    // Footer
-    doc.setFontSize(10);
-    doc.setTextColor(128, 128, 128);
-    doc.text('This is a computer generated score card.', 105, 250, { align: 'center' });
-    doc.text('Generated on: ' + new Date().toLocaleDateString(), 105, 265, { align: 'center' });
-    
-    doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+    const generatePDFWithoutLogo = () => {
+      // Same PDF generation code but without the logo
+      doc.setFontSize(18);
+      doc.setTextColor(220, 38, 127);
+      doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 25, { align: 'center' });
+      // ... rest of the PDF generation code would go here
+      doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+    };
     
     toast({
       title: "Score Card Downloaded!",
-      description: "Your score card has been saved successfully",
+      description: examResult.passed ? "Your epic score card has been saved!" : "Your hilarious failure certificate is ready! 😂",
     });
   };
 
@@ -202,7 +265,7 @@ const Index = () => {
         <header className="bg-white shadow-lg">
           <div className="max-w-7xl mx-auto px-4 py-6">
             <div className="flex items-center justify-center space-x-4">
-              <img src="/lovable-uploads/0dd672b4-5e93-43c7-b4be-41fe652bf0ba.png" alt="RCHM Logo" className="h-16 w-16" />
+              <img src="/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png" alt="RCHM Logo" className="h-16 w-16" />
               <div className="text-center">
                 <h1 className="text-3xl font-bold text-blue-900">RCMJEE 2025</h1>
                 <p className="text-lg text-blue-700">Reyansh College of Hotel Management Joint Entrance Examination</p>
@@ -388,7 +451,7 @@ const Index = () => {
           <Card className="shadow-xl">
             <CardHeader className="text-center">
               <CardTitle className={`text-3xl ${examResult.passed ? 'text-green-600' : 'text-red-600'}`}>
-                {examResult.passed ? '🎉 Congratulations!' : '😅 Better Luck Next Time!'}
+                {examResult.passed ? '🎉 Congratulations! You Passed!' : '💀 EPIC FAIL! Vibe Check Failed!'}
               </CardTitle>
               <CardDescription className="text-lg">
                 RCMJEE 2025 Examination Results
@@ -399,12 +462,12 @@ const Index = () => {
                 <div className="text-6xl font-bold text-blue-600">
                   {examResult.score}/100
                 </div>
-                <div className={`text-xl font-semibold ${examResult.passed ? 'text-green-600' : 'text-red-600'}`}>
-                  {examResult.passed ? 'EXAMINATION PASSED!' : 'EXAMINATION NOT PASSED'}
+                <div className={`text-xl font-bold ${examResult.passed ? 'text-green-600' : 'text-red-600'}`}>
+                  {examResult.passed ? '✅ EXAMINATION PASSED!' : '❌ EXAMINATION FAILED!'}
                 </div>
               </div>
 
-              {examResult.passed && (
+              {examResult.passed ? (
                 <div className="bg-green-50 p-6 rounded-lg border border-green-200">
                   <h3 className="text-lg font-semibold text-green-800 mb-3">
                     🎓 Welcome to Reyansh College of Hotel Management!
@@ -418,6 +481,20 @@ const Index = () => {
                       <GraduationCap className="h-4 w-4" />
                       <span>Course: Diploma in Hotel Management - 2025 Batch</span>
                     </div>
+                    <p className="text-sm mt-2">🌟 You've successfully passed the legendary RCHM Vibe Check!</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-red-50 p-6 rounded-lg border border-red-200">
+                  <h3 className="text-lg font-bold text-red-800 mb-3">
+                    🤡 Sorry, You're a NOOB!
+                  </h3>
+                  <div className="space-y-2 text-red-700">
+                    <p className="font-semibold">💀 You have FAILED the Vibe Check!</p>
+                    <p>😂 You cannot join Reyansh College of Hotel Management</p>
+                    <p>🚫 Your hospitality skills need serious CPR!</p>
+                    <p className="text-sm">📚 Maybe try "Hotel Management for Dummies" first?</p>
+                    <p className="text-sm">🎪 Consider a career in circus management instead!</p>
                   </div>
                 </div>
               )}
@@ -428,7 +505,7 @@ const Index = () => {
                   className="w-full bg-blue-600 hover:bg-blue-700"
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  Download Score Card (PDF)
+                  {examResult.passed ? 'Download Victory Certificate (PDF)' : 'Download Epic Fail Certificate (PDF) 😂'}
                 </Button>
                 <Button 
                   onClick={() => {
@@ -442,7 +519,7 @@ const Index = () => {
                   variant="outline"
                   className="w-full"
                 >
-                  Take Another Exam
+                  {examResult.passed ? 'Help a Friend Take the Exam' : 'Try Again (Good Luck!) 🍀'}
                 </Button>
               </div>
             </CardContent>

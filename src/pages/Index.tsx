@@ -434,7 +434,7 @@ const Index = () => {
                 Online Application for Diploma Course in Hotel Management - 2025 Batch
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                Last Date for Application: 31st December 2024 | Examination Date: 15th January 2025
+                Last Date for Application: 29th Feb 2727 | Examination Date: Today
               </p>
             </div>
           </div>

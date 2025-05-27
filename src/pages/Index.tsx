@@ -150,52 +150,52 @@ const Index = () => {
       
       // Header background
       doc.setFillColor(37, 99, 235);
-      doc.rect(0, 0, 210, 50, 'F');
+      doc.rect(0, 0, 210, 60, 'F');
       
-      // Header text
-      doc.setFontSize(22);
+      // Header text without logo
+      doc.setFontSize(24);
       doc.setTextColor(255, 255, 255);
-      doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 20, { align: 'center' });
+      doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 25, { align: 'center' });
       
       doc.setFontSize(16);
-      doc.text('Joint Entrance Examination 2025', 105, 32, { align: 'center' });
+      doc.text('Joint Entrance Examination 2025', 105, 38, { align: 'center' });
       
       doc.setFontSize(14);
-      doc.text('OFFICIAL SCORE CARD', 105, 42, { align: 'center' });
+      doc.text('OFFICIAL SCORE CARD', 105, 50, { align: 'center' });
       
       // Main content background
       doc.setFillColor(255, 255, 255);
-      doc.rect(15, 60, 180, 200, 'F');
+      doc.rect(15, 70, 180, 200, 'F');
       
       // Border for main content
       doc.setDrawColor(37, 99, 235);
       doc.setLineWidth(2);
-      doc.rect(15, 60, 180, 200);
+      doc.rect(15, 70, 180, 200);
       
       // Student Details Section
       doc.setFillColor(239, 246, 255);
-      doc.rect(20, 70, 170, 40, 'F');
+      doc.rect(20, 80, 170, 40, 'F');
       
       doc.setFontSize(16);
       doc.setTextColor(37, 99, 235);
-      doc.text('CANDIDATE DETAILS', 25, 82);
+      doc.text('CANDIDATE DETAILS', 25, 92);
       
       doc.setFontSize(11);
       doc.setTextColor(0, 0, 0);
-      doc.text('Name:', 25, 95);
+      doc.text('Name:', 25, 105);
       doc.setFont('helvetica', 'bold');
-      doc.text(formData.name, 55, 95);
+      doc.text(formData.name, 55, 105);
       
       doc.setFont('helvetica', 'normal');
-      doc.text('Date of Birth:', 25, 102);
+      doc.text('Date of Birth:', 25, 112);
       doc.setFont('helvetica', 'bold');
-      doc.text(formData.dob, 75, 102);
+      doc.text(formData.dob, 75, 112);
       
       // Results Section
       doc.setFillColor(255, 255, 255);
       doc.setFontSize(18);
       doc.setTextColor(37, 99, 235);
-      doc.text('EXAMINATION RESULTS', 105, 130, { align: 'center' });
+      doc.text('EXAMINATION RESULTS', 105, 140, { align: 'center' });
       
       // Score circle background
       if (examResult.passed) {
@@ -203,70 +203,70 @@ const Index = () => {
       } else {
         doc.setFillColor(239, 68, 68);
       }
-      doc.circle(105, 155, 25, 'F');
+      doc.circle(105, 165, 25, 'F');
       
       // Score text
       doc.setFontSize(24);
       doc.setTextColor(255, 255, 255);
-      doc.text(`${examResult.score}`, 105, 152, { align: 'center' });
+      doc.text(`${examResult.score}`, 105, 162, { align: 'center' });
       doc.setFontSize(12);
-      doc.text('out of 100', 105, 162, { align: 'center' });
+      doc.text('out of 100', 105, 172, { align: 'center' });
       
       // Status with color
       doc.setFontSize(20);
       if (examResult.passed) {
         doc.setTextColor(34, 197, 94);
-        doc.text('✅ PASSED', 105, 190, { align: 'center' });
+        doc.text('✅ PASSED', 105, 200, { align: 'center' });
         
         // Success details box
         doc.setFillColor(220, 252, 231);
-        doc.rect(25, 200, 160, 50, 'F');
+        doc.rect(25, 210, 160, 50, 'F');
         doc.setDrawColor(34, 197, 94);
         doc.setLineWidth(1);
-        doc.rect(25, 200, 160, 50);
+        doc.rect(25, 210, 160, 50);
         
         doc.setFontSize(14);
         doc.setTextColor(34, 197, 94);
-        doc.text('🎉 CONGRATULATIONS! 🎉', 105, 215, { align: 'center' });
+        doc.text('🎉 CONGRATULATIONS! 🎉', 105, 225, { align: 'center' });
         
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
-        doc.text('Welcome to Reyansh College of Hotel Management!', 105, 225, { align: 'center' });
-        doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 235, { align: 'center' });
-        doc.text('Course: Diploma in Hotel Management - 2025 Batch', 105, 245, { align: 'center' });
+        doc.text('Welcome to Reyansh College of Hotel Management!', 105, 235, { align: 'center' });
+        doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 245, { align: 'center' });
+        doc.text('Course: Diploma in Hotel Management - 2025 Batch', 105, 255, { align: 'center' });
         
       } else {
         doc.setTextColor(239, 68, 68);
-        doc.text('❌ FAILED', 105, 190, { align: 'center' });
+        doc.text('❌ FAILED', 105, 200, { align: 'center' });
         
         // Failure details box
         doc.setFillColor(254, 226, 226);
-        doc.rect(25, 200, 160, 40, 'F');
+        doc.rect(25, 210, 160, 40, 'F');
         doc.setDrawColor(239, 68, 68);
         doc.setLineWidth(1);
-        doc.rect(25, 200, 160, 40);
+        doc.rect(25, 210, 160, 40);
         
         doc.setFontSize(14);
         doc.setTextColor(239, 68, 68);
-        doc.text('BETTER LUCK NEXT TIME!', 105, 215, { align: 'center' });
+        doc.text('BETTER LUCK NEXT TIME!', 105, 225, { align: 'center' });
         
         doc.setFontSize(11);
         doc.setTextColor(0, 0, 0);
-        doc.text('You need to score 100% to pass the entrance examination.', 105, 225, { align: 'center' });
-        doc.text('Please prepare well and attempt again next year.', 105, 235, { align: 'center' });
+        doc.text('Unfortunately, you did not pass the examination.', 105, 235, { align: 'center' });
+        doc.text('Please prepare well and attempt again next year.', 105, 245, { align: 'center' });
       }
       
       // Footer
       doc.setFontSize(8);
       doc.setTextColor(128, 128, 128);
-      doc.text('This is a computer generated score card', 105, 270, { align: 'center' });
-      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 278, { align: 'center' });
-      doc.text('Powered by RCMJEE 2025', 105, 286, { align: 'center' });
+      doc.text('This is a computer generated score card', 105, 280, { align: 'center' });
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 288, { align: 'center' });
+      doc.text('Powered by RCMJEE 2025', 105, 296, { align: 'center' });
       
       doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
     };
     
-    // Try to add college logo
+    // Try to add college logo with improved positioning
     try {
       const logoImg = new Image();
       logoImg.crossOrigin = 'anonymous';
@@ -275,57 +275,63 @@ const Index = () => {
         doc.setFillColor(248, 250, 252);
         doc.rect(0, 0, 210, 297, 'F');
         
-        // Header background
+        // Header background - made taller to accommodate logo
         doc.setFillColor(37, 99, 235);
-        doc.rect(0, 0, 210, 50, 'F');
+        doc.rect(0, 0, 210, 70, 'F');
         
-        // Add logo
-        doc.addImage(logoImg, 'PNG', 15, 10, 30, 30);
+        // Center the logo at the top
+        const logoSize = 35;
+        const logoX = (210 - logoSize) / 2; // Center horizontally
+        doc.addImage(logoImg, 'PNG', logoX, 10, logoSize, logoSize);
         
-        // Header text
-        doc.setFontSize(22);
+        // Header text positioned below the logo
+        doc.setFontSize(20);
         doc.setTextColor(255, 255, 255);
-        doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 20, { align: 'center' });
-        
-        doc.setFontSize(16);
-        doc.text('Joint Entrance Examination 2025', 105, 32, { align: 'center' });
+        doc.text('REYANSH COLLEGE OF HOTEL MANAGEMENT', 105, 52, { align: 'center' });
         
         doc.setFontSize(14);
-        doc.text('OFFICIAL SCORE CARD', 105, 42, { align: 'center' });
+        doc.text('Joint Entrance Examination 2025', 105, 62, { align: 'center' });
         
-        // Main content background
+        // Main content background - adjusted position
         doc.setFillColor(255, 255, 255);
-        doc.rect(15, 60, 180, 200, 'F');
+        doc.rect(15, 80, 180, 200, 'F');
         
         // Border for main content
         doc.setDrawColor(37, 99, 235);
         doc.setLineWidth(2);
-        doc.rect(15, 60, 180, 200);
+        doc.rect(15, 80, 180, 200);
+        
+        // "OFFICIAL SCORE CARD" banner
+        doc.setFillColor(37, 99, 235);
+        doc.rect(20, 85, 170, 15, 'F');
+        doc.setFontSize(14);
+        doc.setTextColor(255, 255, 255);
+        doc.text('OFFICIAL SCORE CARD', 105, 95, { align: 'center' });
         
         // Student Details Section
         doc.setFillColor(239, 246, 255);
-        doc.rect(20, 70, 170, 40, 'F');
+        doc.rect(20, 105, 170, 40, 'F');
         
         doc.setFontSize(16);
         doc.setTextColor(37, 99, 235);
-        doc.text('CANDIDATE DETAILS', 25, 82);
+        doc.text('CANDIDATE DETAILS', 25, 117);
         
         doc.setFontSize(11);
         doc.setTextColor(0, 0, 0);
-        doc.text('Name:', 25, 95);
+        doc.text('Name:', 25, 130);
         doc.setFont('helvetica', 'bold');
-        doc.text(formData.name, 55, 95);
+        doc.text(formData.name, 55, 130);
         
         doc.setFont('helvetica', 'normal');
-        doc.text('Date of Birth:', 25, 102);
+        doc.text('Date of Birth:', 25, 137);
         doc.setFont('helvetica', 'bold');
-        doc.text(formData.dob, 75, 102);
+        doc.text(formData.dob, 75, 137);
         
         // Results Section
         doc.setFillColor(255, 255, 255);
         doc.setFontSize(18);
         doc.setTextColor(37, 99, 235);
-        doc.text('EXAMINATION RESULTS', 105, 130, { align: 'center' });
+        doc.text('EXAMINATION RESULTS', 105, 160, { align: 'center' });
         
         // Score circle background
         if (examResult.passed) {
@@ -333,67 +339,70 @@ const Index = () => {
         } else {
           doc.setFillColor(239, 68, 68);
         }
-        doc.circle(105, 155, 25, 'F');
+        doc.circle(105, 185, 25, 'F');
         
         // Score text
         doc.setFontSize(24);
         doc.setTextColor(255, 255, 255);
-        doc.text(`${examResult.score}`, 105, 152, { align: 'center' });
+        doc.text(`${examResult.score}`, 105, 182, { align: 'center' });
         doc.setFontSize(12);
-        doc.text('out of 100', 105, 162, { align: 'center' });
+        doc.text('out of 100', 105, 192, { align: 'center' });
         
         // Status with color
         doc.setFontSize(20);
         if (examResult.passed) {
           doc.setTextColor(34, 197, 94);
-          doc.text('✅ PASSED', 105, 190, { align: 'center' });
+          doc.text('✅ PASSED', 105, 220, { align: 'center' });
           
           // Success details box
           doc.setFillColor(220, 252, 231);
-          doc.rect(25, 200, 160, 50, 'F');
+          doc.rect(25, 230, 160, 45, 'F');
           doc.setDrawColor(34, 197, 94);
           doc.setLineWidth(1);
-          doc.rect(25, 200, 160, 50);
+          doc.rect(25, 230, 160, 45);
           
           doc.setFontSize(14);
           doc.setTextColor(34, 197, 94);
-          doc.text('🎉 CONGRATULATIONS! 🎉', 105, 215, { align: 'center' });
+          doc.text('🎉 CONGRATULATIONS! 🎉', 105, 245, { align: 'center' });
           
           doc.setFontSize(12);
           doc.setTextColor(0, 0, 0);
-          doc.text('Welcome to Reyansh College of Hotel Management!', 105, 225, { align: 'center' });
-          doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 235, { align: 'center' });
-          doc.text('Course: Diploma in Hotel Management - 2025 Batch', 105, 245, { align: 'center' });
+          doc.text('Welcome to Reyansh College of Hotel Management!', 105, 255, { align: 'center' });
+          doc.text(`Joining Date: ${examResult.joiningDate}`, 105, 265, { align: 'center' });
+          doc.text('Course: Diploma in Hotel Management - 2025 Batch', 105, 270, { align: 'center' });
           
         } else {
           doc.setTextColor(239, 68, 68);
-          doc.text('❌ FAILED', 105, 190, { align: 'center' });
+          doc.text('❌ FAILED', 105, 220, { align: 'center' });
           
           // Failure details box
           doc.setFillColor(254, 226, 226);
-          doc.rect(25, 200, 160, 40, 'F');
+          doc.rect(25, 230, 160, 40, 'F');
           doc.setDrawColor(239, 68, 68);
           doc.setLineWidth(1);
-          doc.rect(25, 200, 160, 40);
+          doc.rect(25, 230, 160, 40);
           
           doc.setFontSize(14);
           doc.setTextColor(239, 68, 68);
-          doc.text('BETTER LUCK NEXT TIME!', 105, 215, { align: 'center' });
+          doc.text('BETTER LUCK NEXT TIME!', 105, 245, { align: 'center' });
           
           doc.setFontSize(11);
           doc.setTextColor(0, 0, 0);
-          doc.text('You need to score 100% to pass the entrance examination.', 105, 225, { align: 'center' });
-          doc.text('Please prepare well and attempt again next year.', 105, 235, { align: 'center' });
+          doc.text('Unfortunately, you did not pass the examination.', 105, 255, { align: 'center' });
+          doc.text('Please prepare well and attempt again next year.', 105, 265, { align: 'center' });
         }
         
         // Footer
         doc.setFontSize(8);
         doc.setTextColor(128, 128, 128);
-        doc.text('This is a computer generated score card', 105, 270, { align: 'center' });
-        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 278, { align: 'center' });
-        doc.text('Powered by RCMJEE 2025', 105, 286, { align: 'center' });
+        doc.text('This is a computer generated score card', 105, 285, { align: 'center' });
+        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 290, { align: 'center' });
         
         doc.save(`RCMJEE_2025_ScoreCard_${formData.name.replace(/\s+/g, '_')}.pdf`);
+      };
+      logoImg.onerror = () => {
+        console.log('Logo loading failed, generating PDF without logo');
+        generatePDFWithoutLogo();
       };
       logoImg.src = '/lovable-uploads/885d3ed0-7628-4d88-9359-c4a99ffbe826.png';
     } catch (error) {
